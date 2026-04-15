@@ -31,7 +31,7 @@ jobs:
         run: npm install --global npm@10.9.2
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Create release PR or publish
         uses: changesets/action@v1
@@ -42,4 +42,5 @@ jobs:
           commit: 'chore: release packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
