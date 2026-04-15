@@ -48,9 +48,9 @@ function publishWorkspacePackage() {
   const publishArgs = ['publish', '--workspace', '@activaq/sdk', '--access', 'public'];
   const isPrivateRepo = String(process.env.GITHUB_REPOSITORY_PRIVATE).toLowerCase() === 'true';
 
-  if (!isPrivateRepo) {
-    publishArgs.push('--provenance');
-  }
+  // if (!isPrivateRepo) {
+  //   publishArgs.push('--provenance');
+  // }
 
   console.log(
     `[release] ${isPrivateRepo ? 'Private repository detected. Publishing without provenance.' :  'Public repository detected. Publishing with provenance.'}`
