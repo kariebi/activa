@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
-const packageJsonPath = path.join(rootDir, 'packages/activa/package.json');
+const packageJsonPath = path.join(rootDir, 'packages/activaq/package.json');
 const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
 function fail(message) {
