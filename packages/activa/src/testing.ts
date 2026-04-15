@@ -1,1 +1,0 @@
-export { createMemoryStorageAdapter } from './memory';

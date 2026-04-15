@@ -10,7 +10,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@activaq/sdk": "file:../../packages/activa",
+    "@activaq/sdk": "file:../../packages/activaq",
     "hono": "^4.10.1",
     "next": "^15.5.5",
     "react": "^19.1.1",
