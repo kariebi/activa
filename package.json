@@ -1,0 +1,27 @@
+{
+  "name": "activa-workspace",
+  "private": true,
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace activa && npm run build --workspace @activa/example-nextjs",
+    "build:package": "npm run build --workspace activa",
+    "build:example": "npm run build --workspace @activa/example-nextjs",
+    "dev:package": "npm run dev --workspace activa",
+    "dev:example": "npm run dev --workspace @activa/example-nextjs",
+    "docker:build:demo": "docker build -f examples/nextjs/Dockerfile -t activa-demo .",
+    "test": "npm run test --workspace activa",
+    "typecheck": "npm run typecheck --workspace activa && npm run typecheck --workspace @activa/example-nextjs",
+    "check": "npm run test && npm run typecheck && npm run build",
+    "postinstall": "npm run build --workspace activa",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.7"
+  }
+}
