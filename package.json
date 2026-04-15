@@ -19,7 +19,8 @@
     "postinstall": "npm run build --workspace activa",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish"
+    "release": "node ./scripts/publish-activa.mjs",
+    "release:changesets": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.7"
