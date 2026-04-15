@@ -53,7 +53,7 @@ function publishWorkspacePackage() {
   }
 
   console.log(
-    `[release] ${isPrivateRepo ? 'Private repository detected. Publishing without provenance.' : 'Public repository detected. Publishing with provenance.'}`
+    `[release] ${isPrivateRepo ? 'Private repository detected. Publishing without provenance.' :  'Public repository detected. Publishing with provenance.'}`
   );
 
   const result = spawnSync(
