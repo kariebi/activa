@@ -16,8 +16,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 23
+          node-version: 20
           cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Setup npm
+        run: npm install --global npm@10.9.2
 
       - name: Install dependencies
         run: npm ci
