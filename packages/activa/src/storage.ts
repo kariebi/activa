@@ -65,15 +65,15 @@ class UpstashRestAdapter implements ActivaStorageAdapter {
 
   constructor(config: UpstashRedisConfig) {
     if (!config.url) {
-      throw new Error('Activa requires redis.url when using Upstash REST.');
+      throw new Error('Activaq requires redis.url when using Upstash REST.');
     }
 
     if (!config.token) {
-      throw new Error('Activa requires redis.token when using Upstash REST.');
+      throw new Error('Activaq requires redis.token when using Upstash REST.');
     }
 
     if (typeof (config.fetch ?? globalThis.fetch) !== 'function') {
-      throw new Error('Activa could not find a fetch implementation for the Upstash REST adapter.');
+      throw new Error('Activaq could not find a fetch implementation for the Upstash REST adapter.');
     }
 
     this.url = config.url.replace(/\/+$/, '');

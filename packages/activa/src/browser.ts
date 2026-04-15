@@ -12,7 +12,7 @@ function createId() {
   if (globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function') {
     return globalThis.crypto.randomUUID();
   }
-  return `activa_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+  return `activaq_${Date.now()}_${Math.random().toString(16).slice(2)}`;
 }
 
 function describeTarget(target: EventTarget | null) {
@@ -29,11 +29,16 @@ function describeTarget(target: EventTarget | null) {
   return `${tagName}${id}${className}`;
 }
 
-export { createActivaHttpClient, subscribeToActivaStream } from './http-client';
+export {
+  createActivaHttpClient,
+  createActivaHttpClient as createActivaqHttpClient,
+  subscribeToActivaStream,
+  subscribeToActivaStream as subscribeToActivaqStream
+} from './http-client';
 
 export function createActivaBrowserClient(options: ActivaBrowserClientOptions) {
   const client = createActivaHttpClient({
-    endpoint: options.endpoint ?? '/activa',
+    endpoint: options.endpoint ?? '/activaq',
     ...(options.headers ? { headers: options.headers } : {}),
     ...(options.fetch ? { fetch: options.fetch } : {})
   });
@@ -64,11 +69,11 @@ export function createActivaBrowserClient(options: ActivaBrowserClientOptions) {
     const href = overrides.href ?? (typeof window !== 'undefined' ? window.location.href : null);
 
     if (!userId) {
-      throw new Error('Activa browser client requires a userId value.');
+      throw new Error('Activaq browser client requires a userId value.');
     }
 
     if (!roomId) {
-      throw new Error('Activa browser client requires a roomId value.');
+      throw new Error('Activaq browser client requires a roomId value.');
     }
 
     const nextRoomId = roomId as string;
@@ -246,3 +251,5 @@ export function createActivaBrowserClient(options: ActivaBrowserClientOptions) {
     }
   };
 }
+
+export const createActivaqBrowserClient = createActivaBrowserClient;

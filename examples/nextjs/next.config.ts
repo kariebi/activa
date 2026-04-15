@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['activa'],
+  transpilePackages: ['@activaq/sdk'],
   output: 'standalone',
   outputFileTracingRoot: path.resolve(process.cwd(), '../..'),
   experimental: {

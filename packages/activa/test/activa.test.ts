@@ -83,7 +83,7 @@ describe('Activa Hono routes', () => {
     const app = createActivaHonoApp({ activa, enableCors: false });
 
     const joinResponse = await app.request(
-      new Request('http://activa.local/presence/join', {
+      new Request('http://activaq.local/presence/join', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ userId: 'user_1', roomId: 'lobby' })
@@ -91,19 +91,19 @@ describe('Activa Hono routes', () => {
     );
     expect(joinResponse.status).toBe(200);
 
-    const countResponse = await app.request('http://activa.local/presence/count?roomId=lobby');
+    const countResponse = await app.request('http://activaq.local/presence/count?roomId=lobby');
     const countPayload = await countResponse.json();
     expect(countPayload.data.count).toBe(1);
 
     await app.request(
-      new Request('http://activa.local/session/event', {
+      new Request('http://activaq.local/session/event', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ userId: 'user_1', roomId: 'lobby', sessionId: 'session_1', type: 'click', x: 12, y: 18 })
       })
     );
 
-    const heatmapResponse = await app.request('http://activa.local/analytics/heatmap?roomId=lobby');
+    const heatmapResponse = await app.request('http://activaq.local/analytics/heatmap?roomId=lobby');
     const heatmapPayload = await heatmapResponse.json();
     expect(heatmapPayload.data.cells[0].count).toBe(1);
   });
@@ -112,7 +112,7 @@ describe('Activa Hono routes', () => {
     const activa = createActiva({ redis: createMemoryStorageAdapter(), namespace: 'stream-suite' });
     const app = createActivaHonoApp({ activa, enableCors: false, defaultStreamPollIntervalMs: 50 });
 
-    const response = await app.request('http://activa.local/stream/sse?roomId=room-1&pollIntervalMs=50');
+    const response = await app.request('http://activaq.local/stream/sse?roomId=room-1&pollIntervalMs=50');
     expect(response.status).toBe(200);
 
     const reader = response.body?.getReader();
@@ -156,7 +156,7 @@ describe('Activa Node server', () => {
     try {
       serverHandle = createActivaNodeServer({
         activa,
-        basePath: '/activa',
+        basePath: '/activaq',
         port: 0,
         hostname: '127.0.0.1',
         enableCors: false,
@@ -181,7 +181,7 @@ describe('Activa Node server', () => {
     }
 
     const messages: string[] = [];
-    const socket = new WebSocket(`ws://127.0.0.1:${address.port}/activa/stream/ws?roomId=room-2`);
+    const socket = new WebSocket(`ws://127.0.0.1:${address.port}/activaq/stream/ws?roomId=room-2`);
     socket.on('message', (data: { toString(): string }) => {
       messages.push(data.toString());
     });

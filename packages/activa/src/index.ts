@@ -1,4 +1,4 @@
-export { createActiva } from './activa';
+export { createActiva, createActiva as createActivaq } from './activa';
 export { createUpstashRedisStorage, normalizeStorageAdapter } from './storage';
 export type {
   ActivaBrowserClientOptions,

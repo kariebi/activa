@@ -13,7 +13,7 @@ export interface ActivaNodeServerOptions extends ActivaHonoOptions {
 export function createActivaNodeServer(options: ActivaNodeServerOptions) {
   const port = options.port ?? 3000;
   const hostname = options.hostname ?? '127.0.0.1';
-  const basePath = (options.basePath ?? '/activa').replace(/\/+$/, '');
+  const basePath = (options.basePath ?? '/activaq').replace(/\/+$/, '');
   const app = new Hono().basePath(basePath);
   const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app });
 
@@ -101,3 +101,5 @@ export function createActivaNodeServer(options: ActivaNodeServerOptions) {
       })
   };
 }
+
+export const createActivaqNodeServer = createActivaNodeServer;

@@ -1,7 +1,7 @@
 {
-  "name": "activa",
+  "name": "@activaq/sdk",
   "version": "0.1.0",
-  "description": "Redis-powered real-time presence, active user analytics, and session heatmaps for modern web apps.",
+  "description": "Activaq is a Redis-powered real-time presence, active user analytics, and session heatmap SDK for modern web apps.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

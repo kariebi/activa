@@ -1,3 +1,3 @@
-export const ACTIVA_ENDPOINT = process.env.NEXT_PUBLIC_ACTIVA_ENDPOINT ?? '/api/activa';
-export const ACTIVA_DEMO_ROOM = process.env.NEXT_PUBLIC_ACTIVA_DEMO_ROOM ?? 'demo:lobby';
-export const ACTIVA_DEMO_LABEL = process.env.NEXT_PUBLIC_ACTIVA_DEMO_LABEL ?? 'Activa / Next.js Demo';
+export const ACTIVAQ_ENDPOINT = process.env.NEXT_PUBLIC_ACTIVAQ_ENDPOINT ?? '/api/activaq';
+export const ACTIVAQ_DEMO_ROOM = process.env.NEXT_PUBLIC_ACTIVAQ_DEMO_ROOM ?? 'demo:lobby';
+export const ACTIVAQ_DEMO_LABEL = process.env.NEXT_PUBLIC_ACTIVAQ_DEMO_LABEL ?? 'Activaq / Next.js Demo';

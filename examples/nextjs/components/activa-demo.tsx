@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
-import { createActivaBrowserClient } from 'activa/browser';
+import { createActivaqBrowserClient } from '@activaq/sdk/browser';
 import {
   useActiveUsers,
   useActiveUsersSeries,
@@ -10,8 +10,8 @@ import {
   usePresence,
   usePresenceSnapshot,
   useRecentEvents
-} from 'activa/react';
-import { ACTIVA_DEMO_LABEL, ACTIVA_DEMO_ROOM, ACTIVA_ENDPOINT } from '@/lib/constants';
+} from '@activaq/sdk/react';
+import { ACTIVAQ_DEMO_LABEL, ACTIVAQ_DEMO_ROOM, ACTIVAQ_ENDPOINT } from '@/lib/constants';
 
 function createUserId() {
   return `demo_${Math.random().toString(36).slice(2, 8)}`;
@@ -21,20 +21,20 @@ function useDemoUserId() {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    const current = window.localStorage.getItem('activa-demo-user');
+    const current = window.localStorage.getItem('activaq-demo-user');
     if (current) {
       setUserId(current);
       return;
     }
 
     const next = createUserId();
-    window.localStorage.setItem('activa-demo-user', next);
+    window.localStorage.setItem('activaq-demo-user', next);
     setUserId(next);
   }, []);
 
   const regenerate = useCallback(() => {
     const next = createUserId();
-    window.localStorage.setItem('activa-demo-user', next);
+    window.localStorage.setItem('activaq-demo-user', next);
     setUserId(next);
   }, []);
 
@@ -131,7 +131,7 @@ function LiveFeed({ envelopes }: { envelopes: Array<{ kind: string; roomId: stri
 
 export function ActivaDemo() {
   const { userId, regenerate } = useDemoUserId();
-  const trackerRef = useRef<ReturnType<typeof createActivaBrowserClient> | null>(null);
+  const trackerRef = useRef<ReturnType<typeof createActivaqBrowserClient> | null>(null);
   const [boardPulse, setBoardPulse] = useState(0);
 
   const timeWindow = useMemo(() => {
@@ -142,7 +142,7 @@ export function ActivaDemo() {
 
   const activeSeriesQuery = useMemo(
     () => ({
-      roomId: ACTIVA_DEMO_ROOM,
+      roomId: ACTIVAQ_DEMO_ROOM,
       from: timeWindow.from,
       to: timeWindow.to,
       bucketMs: 5 * 60 * 1000
@@ -152,7 +152,7 @@ export function ActivaDemo() {
 
   const heatmapQuery = useMemo(
     () => ({
-      roomId: ACTIVA_DEMO_ROOM,
+      roomId: ACTIVAQ_DEMO_ROOM,
       from: timeWindow.from,
       to: timeWindow.to,
       bucketMs: 5 * 60 * 1000,
@@ -163,8 +163,8 @@ export function ActivaDemo() {
 
   const streamOptions = useMemo(
     () => ({
-      endpoint: ACTIVA_ENDPOINT,
-      roomId: ACTIVA_DEMO_ROOM,
+      endpoint: ACTIVAQ_ENDPOINT,
+      roomId: ACTIVAQ_DEMO_ROOM,
       transport: 'sse' as const
     }),
     []
@@ -175,10 +175,10 @@ export function ActivaDemo() {
       return undefined;
     }
 
-    const tracker = createActivaBrowserClient({
-      endpoint: ACTIVA_ENDPOINT,
+    const tracker = createActivaqBrowserClient({
+      endpoint: ACTIVAQ_ENDPOINT,
       userId,
-      roomId: ACTIVA_DEMO_ROOM,
+      roomId: ACTIVAQ_DEMO_ROOM,
       metadata: {
         source: 'nextjs-demo'
       }
@@ -194,35 +194,35 @@ export function ActivaDemo() {
   }, [userId]);
 
   const presence = usePresence({
-    endpoint: ACTIVA_ENDPOINT,
-    roomId: ACTIVA_DEMO_ROOM,
+    endpoint: ACTIVAQ_ENDPOINT,
+    roomId: ACTIVAQ_DEMO_ROOM,
     userId: userId ?? 'anonymous',
     enabled: Boolean(userId)
   });
 
   const activeUsers = useActiveUsers({
-    endpoint: ACTIVA_ENDPOINT,
-    roomId: ACTIVA_DEMO_ROOM
+    endpoint: ACTIVAQ_ENDPOINT,
+    roomId: ACTIVAQ_DEMO_ROOM
   });
 
   const snapshot = usePresenceSnapshot({
-    endpoint: ACTIVA_ENDPOINT,
-    roomId: ACTIVA_DEMO_ROOM
+    endpoint: ACTIVAQ_ENDPOINT,
+    roomId: ACTIVAQ_DEMO_ROOM
   });
 
   const activeSeries = useActiveUsersSeries({
-    endpoint: ACTIVA_ENDPOINT,
+    endpoint: ACTIVAQ_ENDPOINT,
     query: activeSeriesQuery
   });
 
   const heatmap = useHeatmap({
-    endpoint: ACTIVA_ENDPOINT,
+    endpoint: ACTIVAQ_ENDPOINT,
     query: heatmapQuery
   });
 
   const recentEvents = useRecentEvents({
-    endpoint: ACTIVA_ENDPOINT,
-    roomId: ACTIVA_DEMO_ROOM,
+    endpoint: ACTIVAQ_ENDPOINT,
+    roomId: ACTIVAQ_DEMO_ROOM,
     limit: 20
   });
 
@@ -263,10 +263,10 @@ export function ActivaDemo() {
     <main className="page-shell">
       <section className="hero-panel">
         <div className="hero-copy">
-          <span className="eyebrow">{ACTIVA_DEMO_LABEL}</span>
+          <span className="eyebrow">{ACTIVAQ_DEMO_LABEL}</span>
           <h1>Real-time presence, analytics, and live room streaming — all running through the SDK.</h1>
           <p>
-            This example app uses the published Activa interfaces the same way a real product would: Hono routes,
+            This example app uses the published Activaq SDK interfaces the same way a real product would: Hono routes,
             Redis-compatible storage, browser tracking, React hooks, live SSE updates, and click-driven heatmaps.
           </p>
           <div className="hero-actions">
@@ -281,7 +281,7 @@ export function ActivaDemo() {
         <div className="hero-meta">
           <div className="meta-card">
             <span className="meta-label">Room</span>
-            <strong>{ACTIVA_DEMO_ROOM}</strong>
+            <strong>{ACTIVAQ_DEMO_ROOM}</strong>
           </div>
           <div className="meta-card">
             <span className="meta-label">Viewer ID</span>
@@ -385,7 +385,7 @@ export function ActivaDemo() {
           <span className="eyebrow">Heatmap lab</span>
           <h2>Click the board to generate session heatmap cells.</h2>
           <p>
-            Each click writes a session event through Activa, increments Redis heatmap buckets, and refreshes the
+            Each click writes a session event through Activaq, increments Redis heatmap buckets, and refreshes the
             visual overlay below.
           </p>
         </div>
@@ -407,7 +407,7 @@ export function ActivaDemo() {
           ))}
           <div className="board-overlay">
             <strong>Click anywhere</strong>
-            <p>Activa will write a new `heatmap_click` event and update the overlay.</p>
+            <p>Activaq will write a new `heatmap_click` event and update the overlay.</p>
           </div>
         </div>
 

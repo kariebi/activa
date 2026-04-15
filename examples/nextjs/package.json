@@ -1,5 +1,5 @@
 {
-  "name": "@activa/example-nextjs",
+  "name": "@activaq/example-nextjs",
   "private": true,
   "version": "0.1.0",
   "scripts": {
@@ -10,7 +10,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "activa": "file:../../packages/activa",
+    "@activaq/sdk": "file:../../packages/activa",
     "hono": "^4.10.1",
     "next": "^15.5.5",
     "react": "^19.1.1",

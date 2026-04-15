@@ -69,7 +69,7 @@ function usePolling<T>(loader: () => Promise<T>, initialValue: T, options: { ena
 }
 
 export function usePresence(options: { endpoint?: string; roomId: string; userId: string; pollIntervalMs?: number; enabled?: boolean }) {
-  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activa' }), [options.endpoint]);
+  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activaq' }), [options.endpoint]);
   const loader = useCallback(() => client.presence.status(options.roomId, options.userId) as Promise<PresenceState>, [client, options.roomId, options.userId]);
   const state = usePolling(loader, {
     online: false,
@@ -92,7 +92,7 @@ export function usePresence(options: { endpoint?: string; roomId: string; userId
 }
 
 export function useActiveUsers(options: { endpoint?: string; roomId: string; pollIntervalMs?: number; enabled?: boolean }) {
-  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activa' }), [options.endpoint]);
+  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activaq' }), [options.endpoint]);
   const loader = useCallback(() => client.presence.count(options.roomId), [client, options.roomId]);
   const state = usePolling(loader, { roomId: options.roomId, count: 0 }, {
     enabled: options.enabled ?? Boolean(options.roomId),
@@ -106,7 +106,7 @@ export function useActiveUsers(options: { endpoint?: string; roomId: string; pol
 }
 
 export function usePresenceSnapshot(options: { endpoint?: string; roomId: string; pollIntervalMs?: number; enabled?: boolean }) {
-  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activa' }), [options.endpoint]);
+  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activaq' }), [options.endpoint]);
   const loader = useCallback(() => client.presence.snapshot(options.roomId), [client, options.roomId]);
   return usePolling(loader, { roomId: options.roomId, count: 0, users: [] as PresenceState[] }, {
     enabled: options.enabled ?? Boolean(options.roomId),
@@ -115,7 +115,7 @@ export function usePresenceSnapshot(options: { endpoint?: string; roomId: string
 }
 
 export function useActiveUsersSeries(options: { endpoint?: string; query: ActiveUsersQuery; pollIntervalMs?: number; enabled?: boolean }) {
-  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activa' }), [options.endpoint]);
+  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activaq' }), [options.endpoint]);
   const loader = useCallback(() => client.analytics.activeUsersSeries(options.query), [client, options.query]);
   return usePolling(loader, {
     roomId: options.query.roomId,
@@ -130,7 +130,7 @@ export function useActiveUsersSeries(options: { endpoint?: string; query: Active
 }
 
 export function useHeatmap(options: { endpoint?: string; query: HeatmapQuery; pollIntervalMs?: number; enabled?: boolean }) {
-  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activa' }), [options.endpoint]);
+  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activaq' }), [options.endpoint]);
   const loader = useCallback(() => client.analytics.heatmap(options.query), [client, options.query]);
   const state = usePolling(loader, {
     roomId: options.query.roomId,
@@ -151,7 +151,7 @@ export function useHeatmap(options: { endpoint?: string; query: HeatmapQuery; po
 }
 
 export function useRecentEvents(options: { endpoint?: string; roomId: string; limit?: number; pollIntervalMs?: number; enabled?: boolean }) {
-  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activa' }), [options.endpoint]);
+  const client = useMemo(() => createActivaHttpClient({ endpoint: options.endpoint ?? '/activaq' }), [options.endpoint]);
   const loader = useCallback(() => client.analytics.events(options.roomId, options.limit ?? 20), [client, options.limit, options.roomId]);
   return usePolling(loader, [] as Array<Record<string, unknown>>, {
     enabled: options.enabled ?? Boolean(options.roomId),

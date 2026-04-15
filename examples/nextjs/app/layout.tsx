@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk, IBM_Plex_Mono } from 'next/font/google';
-import { ACTIVA_DEMO_LABEL } from '@/lib/constants';
+import { ACTIVAQ_DEMO_LABEL } from '@/lib/constants';
 import './globals.css';
 
 const display = Space_Grotesk({
@@ -15,8 +15,8 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: ACTIVA_DEMO_LABEL,
-  description: 'A real Next.js demo app showcasing Activa presence, active user counts, heatmaps, and live streams.'
+  title: ACTIVAQ_DEMO_LABEL,
+  description: 'A real Next.js demo app showcasing Activaq presence, active user counts, heatmaps, and live streams.'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

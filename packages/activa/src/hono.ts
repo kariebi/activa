@@ -246,3 +246,6 @@ export function mountActivaRoutes(app: Hono, options: ActivaHonoOptions) {
 export function createActivaHonoApp(options: ActivaHonoOptions) {
   return mountActivaRoutes(new Hono(), options);
 }
+
+export const mountActivaqRoutes = mountActivaRoutes;
+export const createActivaqHonoApp = createActivaHonoApp;

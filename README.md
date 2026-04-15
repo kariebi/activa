@@ -1,8 +1,8 @@
-# Activa
+# Activaq
 
-Activa is a TypeScript SDK for Redis-powered real-time presence, active user counts, session heatmaps, and live room analytics.
+Activaq is a TypeScript SDK for Redis-powered real-time presence, active user counts, session heatmaps, and live room analytics.
 
-![Activa architecture](./image.png)
+![Activaq architecture](./image.png)
 
 This repo now ships as a small monorepo with:
 
@@ -14,14 +14,14 @@ This repo now ships as a small monorepo with:
 
 ### SDK
 
-The `activa` package exports:
+The `@activaq/sdk` package exports:
 
-- `activa`: core Redis-backed presence + analytics engine
-- `activa/browser`: browser tracker + HTTP client + SSE/WS stream subscription helper
-- `activa/react`: React hooks for presence, counts, series, heatmaps, recent events, and live stream envelopes
-- `activa/hono`: Hono route factory for REST + SSE streaming
-- `activa/node`: a standalone Hono Node server with WebSocket streaming enabled
-- `activa/testing`: in-memory storage adapter for tests and local demos
+- `@activaq/sdk`: core Redis-backed presence + analytics engine
+- `@activaq/sdk/browser`: browser tracker + HTTP client + SSE/WS stream subscription helper
+- `@activaq/sdk/react`: React hooks for presence, counts, series, heatmaps, recent events, and live stream envelopes
+- `@activaq/sdk/hono`: Hono route factory for REST + SSE streaming
+- `@activaq/sdk/node`: a standalone Hono Node server with WebSocket streaming enabled
+- `@activaq/sdk/testing`: in-memory storage adapter for tests and local demos
 
 ### Server features
 
@@ -73,12 +73,12 @@ npm run docker:build:demo
 
 ## SDK quick start
 
-### 1. Create the Activa instance
+### 1. Create the Activaq instance
 
 ```ts
-import { createActiva, createUpstashRedisStorage } from 'activa';
+import { createActivaq, createUpstashRedisStorage } from '@activaq/sdk';
 
-export const activa = createActiva({
+export const activaq = createActivaq({
   namespace: 'my-product',
   redis: createUpstashRedisStorage({
     url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -94,20 +94,20 @@ export const activa = createActiva({
 
 ```ts
 import { Hono } from 'hono';
-import { createActivaHonoApp } from 'activa/hono';
-import { activa } from './activa';
+import { createActivaqHonoApp } from '@activaq/sdk/hono';
+import { activaq } from './activaq';
 
 const app = new Hono().basePath('/api');
-app.route('/activa', createActivaHonoApp({ activa }));
+app.route('/activaq', createActivaqHonoApp({ activaq }));
 ```
 
 ### 3. Track from the browser
 
 ```ts
-import { createActivaBrowserClient } from 'activa/browser';
+import { createActivaqBrowserClient } from '@activaq/sdk/browser';
 
-const tracker = createActivaBrowserClient({
-  endpoint: '/api/activa',
+const tracker = createActivaqBrowserClient({
+  endpoint: '/api/activaq',
   userId: () => window.__USER__.id,
   roomId: () => window.location.pathname,
   metadata: { plan: 'pro' }
@@ -120,21 +120,21 @@ await tracker.track({ type: 'cta_click', name: 'cta_click', x: 320, y: 180 });
 ### 4. Read it in React
 
 ```tsx
-import { useActiveUsers, useHeatmap, usePresence } from 'activa/react';
+import { useActiveUsers, useHeatmap, usePresence } from '@activaq/sdk/react';
 
 function PresenceDot({ userId, roomId }: { userId: string; roomId: string }) {
-  const { online } = usePresence({ endpoint: '/api/activa', roomId, userId });
+  const { online } = usePresence({ endpoint: '/api/activaq', roomId, userId });
   return <span data-online={online} />;
 }
 
 function ActiveUsersCard({ roomId }: { roomId: string }) {
-  const { count } = useActiveUsers({ endpoint: '/api/activa', roomId });
+  const { count } = useActiveUsers({ endpoint: '/api/activaq', roomId });
   return <strong>{count} online</strong>;
 }
 
 function HeatmapPanel({ roomId }: { roomId: string }) {
   const { cells } = useHeatmap({
-    endpoint: '/api/activa',
+    endpoint: '/api/activaq',
     query: {
       roomId,
       from: Date.now() - 30 * 60 * 1000,
@@ -152,7 +152,7 @@ function HeatmapPanel({ roomId }: { roomId: string }) {
 
 ### SSE
 
-`createActivaHonoApp()` includes:
+`createActivaqHonoApp()` includes:
 
 - `GET /stream/sse?roomId=...&cursor=$`
 
@@ -163,11 +163,11 @@ The standalone Node helper enables:
 - `GET /stream/ws?roomId=...&cursor=$`
 
 ```ts
-import { createActivaNodeServer } from 'activa/node';
+import { createActivaqNodeServer } from '@activaq/sdk/node';
 
-const server = createActivaNodeServer({
-  activa,
-  basePath: '/activa',
+const server = createActivaqNodeServer({
+  activaq,
+  basePath: '/activaq',
   port: 3000
 });
 ```
@@ -197,3 +197,15 @@ The package test suite covers:
 - Hono REST routes
 - SSE streaming
 - standalone WebSocket streaming
+
+## Publishing
+
+Changesets + GitHub Actions are set up for npm publishing.
+
+- Add a changeset: `npm run changeset`
+- Version packages: `npm run version-packages`
+- Publish the SDK locally: `npm run release`
+- Publish from CI: push merged changesets to `main`
+
+Set `NPM_TOKEN` in GitHub Actions secrets for the release workflow.
+The release workflow publishes only the `@activaq/sdk` package, so the demo app can keep its local `file:` dependency during development.

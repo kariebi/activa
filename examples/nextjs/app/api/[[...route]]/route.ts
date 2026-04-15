@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
-import { createActivaHonoApp } from 'activa/hono';
-import { activa } from '@/lib/activa';
+import { createActivaqHonoApp } from '@activaq/sdk/hono';
+import { activaq } from '@/lib/activa';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -10,9 +10,9 @@ export const maxDuration = 300;
 const app = new Hono().basePath('/api');
 
 app.route(
-  '/activa',
-  createActivaHonoApp({
-    activa,
+  '/activaq',
+  createActivaqHonoApp({
+    activa: activaq,
     defaultStreamPollIntervalMs: 750
   })
 );

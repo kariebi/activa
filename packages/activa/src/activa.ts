@@ -18,7 +18,7 @@ import type {
 } from './types';
 
 const DEFAULTS: ResolvedActivaOptions = {
-  namespace: 'activa',
+  namespace: 'activaq',
   presenceTtlMs: 30_000,
   heartbeatIntervalMs: 10_000,
   heatmapBucketMs: 300_000,

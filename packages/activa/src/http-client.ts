@@ -20,7 +20,7 @@ function joinUrl(base: string, path: string) {
 }
 
 function withQuery(path: string, query: Record<string, string | number | undefined>) {
-  const url = new URL(`https://activa.local${path.startsWith('/') ? path : `/${path}`}`);
+  const url = new URL(`https://activaq.local${path.startsWith('/') ? path : `/${path}`}`);
   for (const [key, value] of Object.entries(query)) {
     if (value !== undefined && value !== null && value !== '') {
       url.searchParams.set(key, String(value));
@@ -32,12 +32,12 @@ function withQuery(path: string, query: Record<string, string | number | undefin
 async function parseResponse<T>(response: Response) {
   const text = await response.text();
   if (!response.ok) {
-    throw new Error(`Activa request failed with status ${response.status}: ${text}`);
+    throw new Error(`Activaq request failed with status ${response.status}: ${text}`);
   }
 
   const payload = fromJson<{ ok?: boolean; data?: T; error?: string }>(text, {});
   if (payload.ok === false) {
-    throw new Error(payload.error || 'Activa request failed');
+    throw new Error(payload.error || 'Activaq request failed');
   }
 
   return (payload.data ?? payload) as T;
@@ -58,11 +58,11 @@ function toWebSocketUrl(url: string) {
 }
 
 export function createActivaHttpClient(options: ActivaHttpClientOptions = {}) {
-  const endpoint = options.endpoint ?? '/activa';
+  const endpoint = options.endpoint ?? '/activaq';
   const fetchImpl = options.fetch ?? globalThis.fetch;
 
   if (typeof fetchImpl !== 'function') {
-    throw new Error('Activa HTTP client requires fetch.');
+    throw new Error('Activaq HTTP client requires fetch.');
   }
 
   async function get<T>(path: string) {
@@ -187,3 +187,5 @@ export function subscribeToActivaStream(options: SubscribeToActivaStreamOptions)
 }
 
 export type { ActivaLiveEvent };
+export const createActivaqHttpClient = createActivaHttpClient;
+export const subscribeToActivaqStream = subscribeToActivaStream;

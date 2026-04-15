@@ -14,7 +14,7 @@ RUN npm ci
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build --workspace activa && npm run build --workspace @activa/example-nextjs
+RUN npm run build --workspace @activaq/sdk && npm run build --workspace @activaq/example-nextjs
 
 FROM node:20-alpine AS runner
 WORKDIR /app

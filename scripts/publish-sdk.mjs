@@ -47,7 +47,7 @@ async function isVersionPublished(name, version) {
 function publishWorkspacePackage() {
   const result = spawnSync(
     npmCommand,
-    ['publish', '--workspace', 'activa', '--access', 'public', '--provenance'],
+    ['publish', '--workspace', '@activaq/sdk', '--access', 'public', '--provenance'],
     {
       cwd: rootDir,
       env: process.env,
@@ -71,7 +71,7 @@ function publishWorkspacePackage() {
   if (/E404|E403|not in this registry|forbidden/i.test(output)) {
     console.error(
       '[release] npm rejected the package publish. This usually means the npm token cannot publish that package name. ' +
-        'If the unscoped name "activa" is not owned by your npm account or org, switch to a scoped package name like "@your-scope/activa".'
+        'If the package name "@activaq/sdk" is not owned by your npm account or org, switch to a scoped package name like "@your-scope/sdk".'
     );
   }
 
@@ -95,5 +95,5 @@ if (alreadyPublished) {
   process.exit(0);
 }
 
-console.log(`[release] Publishing ${manifest.name}@${manifest.version} from the activa workspace...`);
+console.log(`[release] Publishing ${manifest.name}@${manifest.version} from the @activaq/sdk workspace...`);
 publishWorkspacePackage();

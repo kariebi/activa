@@ -1,11 +1,11 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
-  "changelog": ["@changesets/cli/changelog", { "repo": "your-org/activa" }],
+  "changelog": ["@changesets/cli/changelog", { "repo": "kariebi/activaq" }],
   "commit": false,
   "fixed": [],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@activa/example-nextjs"]
+  "ignore": ["@activaq/example-nextjs"]
 }
