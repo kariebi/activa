@@ -20,7 +20,7 @@ async function waitFor(predicate: () => boolean, timeoutMs = 2_000) {
 }
 
 describe('Activa core', () => {
-  it('tracks presence, active users, and heatmaps end-to-end', async () => {
+  it('tracks presence, active users and heatmaps end-to-end', async () => {
     const activa = createActiva({
       redis: createMemoryStorageAdapter(),
       namespace: 'test-suite',
